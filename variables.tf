@@ -82,8 +82,10 @@ variable "backends" {
     timeout_sec                     = number
     connection_draining_timeout_sec = number
     enable_cdn                      = bool
+    security_policy                 = string
     session_affinity                = string
     affinity_cookie_ttl_sec         = number
+    custom_request_headers          = list(string)
     health_check = object({
       check_interval_sec  = number
       timeout_sec         = number
@@ -116,7 +118,6 @@ variable "backends" {
       oauth2_client_id     = string
       oauth2_client_secret = string
     })
-
   }))
 }
 
@@ -166,6 +167,12 @@ variable "certificate" {
   description = "Content of the SSL certificate. Required if `ssl` is `true` and `ssl_certificates` is empty."
   type        = string
   default     = null
+}
+
+variable "managed_ssl_certificate_domains" {
+  description = "Create Google-managed SSL certificates for specified domains. Requires `ssl` to be set to `true` and `use_ssl_certificates` set to `false`."
+  type        = list(string)
+  default     = []
 }
 
 variable "use_ssl_certificates" {

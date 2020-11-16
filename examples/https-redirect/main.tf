@@ -110,8 +110,10 @@ module "gce-lb-http" {
       timeout_sec                     = 10
       connection_draining_timeout_sec = null
       enable_cdn                      = false
+      security_policy                 = null
       session_affinity                = null
       affinity_cookie_ttl_sec         = null
+      custom_request_headers          = null
 
       health_check = {
         check_interval_sec  = null
@@ -144,6 +146,11 @@ module "gce-lb-http" {
           max_utilization              = null
         }
       ]
+      iap_config = {
+        enable               = false
+        oauth2_client_id     = ""
+        oauth2_client_secret = ""
+      }
     }
   }
 

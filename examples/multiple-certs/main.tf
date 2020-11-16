@@ -145,9 +145,12 @@ module "gce-lb-https" {
       timeout_sec                     = 10
       connection_draining_timeout_sec = null
       enable_cdn                      = false
+      security_policy                 = null
       session_affinity                = null
       affinity_cookie_ttl_sec         = null
-      health_check                    = local.health_check
+      custom_request_headers          = null
+
+      health_check = local.health_check
       log_config = {
         enable      = true
         sample_rate = 1.0
@@ -209,9 +212,12 @@ module "gce-lb-https" {
       timeout_sec                     = 10
       connection_draining_timeout_sec = null
       enable_cdn                      = false
+      security_policy                 = null
       session_affinity                = null
       affinity_cookie_ttl_sec         = null
-      health_check                    = local.health_check
+      custom_request_headers          = null
+
+      health_check = local.health_check
       log_config = {
         enable      = true
         sample_rate = 1.0
@@ -247,9 +253,12 @@ module "gce-lb-https" {
       timeout_sec                     = 10
       connection_draining_timeout_sec = null
       enable_cdn                      = false
+      security_policy                 = null
       session_affinity                = null
       affinity_cookie_ttl_sec         = null
-      health_check                    = local.health_check
+      custom_request_headers          = null
+
+      health_check = local.health_check
       log_config = {
         enable      = true
         sample_rate = 1.0
@@ -285,9 +294,12 @@ module "gce-lb-https" {
       timeout_sec                     = 10
       connection_draining_timeout_sec = null
       enable_cdn                      = false
+      security_policy                 = null
       session_affinity                = null
       affinity_cookie_ttl_sec         = null
-      health_check                    = local.health_check
+      custom_request_headers          = null
+
+      health_check = local.health_check
       log_config = {
         enable      = true
         sample_rate = 1.0
@@ -314,9 +326,7 @@ module "gce-lb-https" {
         oauth2_client_secret = ""
       }
     }
-
   }
-
 }
 
 resource "google_compute_url_map" "https-multi-cert" {
