@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -35,6 +35,6 @@ output "http_proxy" {
 }
 
 output "https_proxy" {
-  description = "The HTTPS proxyused by this module."
+  description = "The HTTPS proxy used by this module."
   value       = google_compute_target_https_proxy.default[*].self_link
 }

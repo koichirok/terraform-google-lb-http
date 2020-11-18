@@ -1,5 +1,5 @@
 /**
- * Copyright 2017 Google LLC
+ * Copyright 2020 Google LLC
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,11 @@
 
 variable "project" {
   description = "The project to deploy to, if not set the default provider project is used."
+  type        = string
+}
+
+variable "name" {
+  description = "Name for the forwarding rule and prefix for supporting resources"
   type        = string
 }
 
@@ -43,6 +48,8 @@ variable "ipv6_address" {
   default     = null
 }
 
+{% if not serverless %}
+{# options unused for serverless LBs #}
 variable "firewall_networks" {
   description = "Names of the networks to create firewall rules in"
   type        = list(string)
@@ -53,11 +60,6 @@ variable "firewall_projects" {
   description = "Names of the projects to create firewall rules in"
   type        = list(string)
   default     = ["default"]
-}
-
-variable "name" {
-  description = "Name for the forwarding rule and prefix for supporting resources"
-  type        = string
 }
 
 variable "target_tags" {
@@ -71,21 +73,32 @@ variable "target_service_accounts" {
   type        = list(string)
   default     = []
 }
+{% endif %}
 
 variable "backends" {
   description = "Map backend indices to list of backend maps."
   type = map(object({
-    description                     = string
-    protocol                        = string
-    port                            = number
-    port_name                       = string
+    {% if not serverless %}{# not necessary for serverless as default port_name=http, protocol=HTTP #}
+    protocol  = string
+    port      = number
+    port_name = string
+    {% endif %}
+
+    description            = string
+    enable_cdn             = bool
+    security_policy        = string
+    custom_request_headers = list(string)
+
+    {% if not serverless %}
+    {# options do not apply to serverless backends #}
     timeout_sec                     = number
     connection_draining_timeout_sec = number
-    enable_cdn                      = bool
-    security_policy                 = string
     session_affinity                = string
     affinity_cookie_ttl_sec         = number
-    custom_request_headers          = list(string)
+    {% endif %}
+
+    {% if not serverless %}
+    {# Serverless NEGs don't support health checks #}
     health_check = object({
       check_interval_sec  = number
       timeout_sec         = number
@@ -96,12 +109,17 @@ variable "backends" {
       host                = string
       logging             = bool
     })
+    {% endif %}
+
     log_config = object({
       enable      = bool
       sample_rate = number
     })
+
     groups = list(object({
-      group                        = string
+      group = string
+
+      {% if not serverless %}
       balancing_mode               = string
       capacity_scaler              = number
       description                  = string
@@ -112,6 +130,7 @@ variable "backends" {
       max_rate_per_instance        = number
       max_rate_per_endpoint        = number
       max_utilization              = number
+      {% endif %}
     }))
     iap_config = object({
       enable               = bool

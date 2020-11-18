@@ -14,10 +14,13 @@
  * limitations under the License.
  */
 
-terraform {
-  required_version = ">= 0.12.6"
-  required_providers {
-    google      = ">= 3.32, <4.0.0"
-    google-beta = ">= 3.32, <4.0.0"
-  }
+provider "google" {
+  version = "~> 3.32.0"
+}
+
+module "example" {
+  source     = "../../../examples/cloudrun"
+  project_id = var.project_id
+  ssl        = false
+  domain     = null
 }

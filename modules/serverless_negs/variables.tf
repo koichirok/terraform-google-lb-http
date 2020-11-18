@@ -26,79 +26,33 @@ variable "name" {
 
 variable "create_address" {
   type        = bool
-  description = "Create a new global IPv4 address"
+  description = "Create a new global address"
   default     = true
-}
-
-variable "create_ipv6_address" {
-  type        = bool
-  description = "Create a new global IPv6 address"
-  default     = false
 }
 
 variable "address" {
   type        = string
-  description = "Existing IPv4 address to use (the actual IP address value)"
+  description = "IP address self link"
   default     = null
 }
 
-variable "ipv6_address" {
+variable "ip_version" {
+  description = "IP version for the Global address (IPv4 or v6) - Empty defaults to IPV4"
   type        = string
-  description = "Existing IPv6 address to use (the actual IP address value)"
   default     = null
 }
 
-variable "firewall_networks" {
-  description = "Names of the networks to create firewall rules in"
-  type        = list(string)
-  default     = ["default"]
-}
-
-variable "firewall_projects" {
-  description = "Names of the projects to create firewall rules in"
-  type        = list(string)
-  default     = ["default"]
-}
-
-variable "target_tags" {
-  description = "List of target tags for health check firewall rule. Exactly one of target_tags or target_service_accounts should be specified."
-  type        = list(string)
-  default     = []
-}
-
-variable "target_service_accounts" {
-  description = "List of target service accounts for health check firewall rule. Exactly one of target_tags or target_service_accounts should be specified."
-  type        = list(string)
-  default     = []
-}
 
 variable "backends" {
   description = "Map backend indices to list of backend maps."
   type = map(object({
-    protocol  = string
-    port      = number
-    port_name = string
 
     description            = string
     enable_cdn             = bool
     security_policy        = string
     custom_request_headers = list(string)
 
-    timeout_sec                     = number
-    connection_draining_timeout_sec = number
-    session_affinity                = string
-    affinity_cookie_ttl_sec         = number
 
-    health_check = object({
-      check_interval_sec  = number
-      timeout_sec         = number
-      healthy_threshold   = number
-      unhealthy_threshold = number
-      request_path        = string
-      port                = number
-      host                = string
-      logging             = bool
-    })
 
     log_config = object({
       enable      = bool
@@ -108,16 +62,6 @@ variable "backends" {
     groups = list(object({
       group = string
 
-      balancing_mode               = string
-      capacity_scaler              = number
-      description                  = string
-      max_connections              = number
-      max_connections_per_instance = number
-      max_connections_per_endpoint = number
-      max_rate                     = number
-      max_rate_per_instance        = number
-      max_rate_per_endpoint        = number
-      max_utilization              = number
     }))
     iap_config = object({
       enable               = bool
