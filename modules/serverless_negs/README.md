@@ -30,6 +30,7 @@ module "lb-http" {
       description                     = null
       enable_cdn                      = false
       custom_request_headers          = null
+      security_policy                 = null
 
 
       log_config = {
@@ -44,7 +45,7 @@ module "lb-http" {
         }
       ]
 
-      iap_config {
+      iap_config = {
         enable               = false
         oauth2_client_id     = null
         oauth2_client_secret = null

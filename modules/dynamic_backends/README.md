@@ -35,6 +35,7 @@ module "gce-lb-http" {
       timeout_sec                     = 10
       enable_cdn                      = false
       custom_request_headers          = null
+      security_policy                 = null
 
       connection_draining_timeout_sec = null
       session_affinity                = null
@@ -73,7 +74,7 @@ module "gce-lb-http" {
         },
       ]
 
-      iap_config {
+      iap_config = {
         enable               = false
         oauth2_client_id     = null
         oauth2_client_secret = null

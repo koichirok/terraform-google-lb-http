@@ -74,6 +74,7 @@ module "lb-http" {
       {% endif %}
       enable_cdn                      = false
       custom_request_headers          = null
+      security_policy                 = null
 
       {% if not serverless %}
       connection_draining_timeout_sec = null
@@ -123,7 +124,7 @@ module "lb-http" {
       ]
       {% endif %}
 
-      iap_config {
+      iap_config = {
         enable               = false
         oauth2_client_id     = null
         oauth2_client_secret = null
