@@ -111,9 +111,11 @@ terraform destroy
 | Name | Description |
 |------|-------------|
 | asset-url |  |
+| asset-url-ipv6 |  |
 | group1\_region |  |
 | group2\_region |  |
 | group3\_region |  |
 | load-balancer-ip |  |
+| load-balancer-ipv6 |  |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
